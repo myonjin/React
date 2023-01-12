@@ -1,3 +1,4 @@
+/* eslint-disable */
 import "./App.css";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import bg from "./img/bg.png";
@@ -5,9 +6,8 @@ import { useState } from "react";
 import data from "./data.js";
 import { Routes, Route, Link, useNavigate,Outlet, useParams } from "react-router-dom";
 import Detail from "./Detail.js";
-
 function App() {
-  let [shoes] = useState(data);
+  let [shoes,setShoes] = useState(data);
   let navigate = useNavigate();
  
 
@@ -38,6 +38,12 @@ function App() {
                     return <Modal shoes={shoes} index={i} />;
                   })}
                 </div>
+                <button onClick={()=>{
+                  let copy = [...shoes];
+                  copy.sort((a,b)=> a.title.toLowerCase()< b.title.toLowerCase() ? -1 : 1);
+                  setShoes(copy)
+                  // console.log(copy,shoes)
+                }}>정렬</button>
               </div>
             </>
           }
@@ -62,7 +68,6 @@ function Event(){
 
   return (
     <div>
-      
       <h4>오늘의 이벤트</h4>
       <Outlet></Outlet>
     </div>
@@ -71,7 +76,7 @@ function Event(){
 function Modal(props) {
   return (
     <div className="col-md-4">
-      <img alt="" src={`https://codingapple1.github.io/shop/shoes${props.index + 1}.jpg`} width="80%" />
+      <img alt="" src={`https://codingapple1.github.io/shop/shoes${props.shoes[props.index].id + 1}.jpg`} width="80%" />
       <h4>{props.shoes[props.index].title}</h4>
       <p>{props.shoes[props.index].content}</p>
     </div>

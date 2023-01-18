@@ -6,8 +6,12 @@ import { useState } from "react";
 import data from "./data.js";
 import { Routes, Route, Link, useNavigate,Outlet, useParams } from "react-router-dom";
 import Detail from "./Detail.js";
+import axios from "axios";
+
+
 function App() {
   let [shoes,setShoes] = useState(data);
+  let [shoes2,setShoes2] = useState();
   let navigate = useNavigate();
  
 
@@ -33,6 +37,19 @@ function App() {
             <>
               <div className="main-bg" style={{ backgroundImage: "url(" + bg + ")" }}></div>
               <div className="container">
+                <button onClick={()=>{
+                  
+                  axios.get('https://codingapple1.github.io/shop/data2.json')
+                  .then((request)=>{
+
+                    let copy = [...shoes]
+                    console.log(...request.data)
+                    copy.push(...request.data)
+                    setShoes(copy)
+                    console.log(shoes)
+                  })
+                  .catch(()=>{console.log('에러')})
+                }}>서버 요청 버튼</button>
                 <div className="row">
                   {shoes.map(function (ele, i) {
                     return <Modal shoes={shoes} index={i} />;

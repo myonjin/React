@@ -21,6 +21,8 @@ function Detail(props) {
   let copy = props.shoes.find((ele) => ele.id == id);
   let [inputData, setInputData] = useState("");
   let [tab,setTab] = useState(0);
+  let [fade,setFade] = useState('');
+
 
   useEffect(() => {
     console.log(tab)
@@ -38,6 +40,13 @@ function Detail(props) {
     }
   }, [inputData]);
 
+  useEffect(()=>{
+    setTimeout(() => {
+      setFade('alertEnd')
+    }, 100);
+  return setFade('')
+  },[tab])
+
   // let 찾은상품 = props.shoes.find(function (x) {
   //   return x.id == id
   // })
@@ -54,7 +63,7 @@ function Detail(props) {
       {/* <Box>
             <YellowBtn bg='blue'>버튼</YellowBtn>
             </Box> */}
-      {two === false ? <div className="alert alert-warning">2초뒤에 사라질걸요</div> : null}
+      {two === false ? <div className={"alert alert-warning alertStart "+fade}>2초뒤에 사라질걸요</div> : null}
       <div className="row">
         <div className="col-md-6">
           <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
@@ -96,17 +105,29 @@ function Detail(props) {
   );
 }
 function TabComponent({tab}) {
+  let [fade,setFade] = useState('end');
+  useEffect(()=>{
+    setTimeout(() => {
+      setFade('end')
+    },100);
+    return setFade('')
+  },[tab])
+  return (  <div className={'start '+ fade}>
+        { [ <div>내용0</div>, <div>내용1</div>, <div>내용2</div> ][tab] }
+  </div>)
 
 
-  if (tab == 0 ){
-    return <div className="start end">내용1</div>
-} else if( tab == 1){
-  return <div className="start end" >내용 2</div>
-} else if ( tab == 2 ){
-  return <div className="start end" > 내뇽 3</div>
+
+
+//   if (tab == 0 ){
+//     return <div className="start end">내용1</div>
+// } else if( tab == 1){
+//   return <div className="start end" >내용 2</div>
+// } else if ( tab == 2 ){
+//   return <div className="start end" > 내뇽 3</div>
+// } 
 }
 
-}
 
 
 export default Detail;

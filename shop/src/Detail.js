@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { Navbar, Nav, Container } from "react-bootstrap";
+import {context1} from './App.js'
 
 // let YellowBtn = styled.button`
 //   background : ${props => props.bg};
@@ -15,12 +16,16 @@ import { Navbar, Nav, Container } from "react-bootstrap";
 // `
 
 function Detail(props) {
+
+  let {jae,shoes} = useContext(context1)
+
   let [two, setTwo] = useState(false);
   let [count, setCount] = useState(0);
   let { id } = useParams();
   let copy = props.shoes.find((ele) => ele.id == id);
   let [inputData, setInputData] = useState("");
   let [tab,setTab] = useState(0);
+
 
   useEffect(() => {
     console.log(tab)
@@ -70,10 +75,12 @@ function Detail(props) {
           <h4 className="pt-5">{copy.title}</h4>
           <p>1</p>
           <p>상품설명</p>
+          
           <p>120000원</p>
           <button className="btn btn-danger">주문하기</button>
         </div>
       </div>
+      
       <Nav variant="tabs" defaultActiveKey="link0">
         <Nav.Item>
           <Nav.Link onClick={()=>{setTab(0); }} eventKey="link0">버튼0</Nav.Link>
@@ -97,7 +104,7 @@ function Detail(props) {
 }
 function TabComponent({tab}) {
 
-
+  
   if (tab == 0 ){
     return <div className="start end">내용1</div>
 } else if( tab == 1){

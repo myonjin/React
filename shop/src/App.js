@@ -2,18 +2,19 @@
 import "./App.css";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import bg from "./img/bg.png";
-import { useState } from "react";
+import { createContext, useState } from "react";
 import data from "./data.js";
 import { Routes, Route, Link, useNavigate,Outlet, useParams } from "react-router-dom";
 import Detail from "./Detail.js";
 import axios from "axios";
 
 
+export let context1 = createContext()
+
 function App() {
   let [shoes,setShoes] = useState(data);
-  let [shoes2,setShoes2] = useState();
   let navigate = useNavigate();
- 
+  let [jae] = useState([10,11,12])
 
   return (
     <div className="App">
@@ -67,7 +68,11 @@ function App() {
         />
         <Route 
           path="/detail/:id"
-          element={<Detail shoes={shoes}/>}
+          element={
+            <context1.Provider value={{jae,shoes}}>
+              <Detail shoes={shoes}/>
+            </context1.Provider>
+        }
         />
         
         <Route path="/event"  element={ <Event/> } >  
